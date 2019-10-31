@@ -38,10 +38,15 @@ with the following query parameters:
 | `state`         | Optional     | Ensures authorization flow integrity. See [security](#security-considerations). |
 
 Example Authorization URL:
-```plaintext
-https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=<yourRedirectURL>&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid offline_access profile email veteran_status.read
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
+
+<pre className="va-api-code-block-with-tip">
+  <code>
+    https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&amp;redirect_uri=&lt;yourRedirectURL&gt;&amp;response_type=id_token token&amp;response_mode=fragment&amp;state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&amp;nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&amp;scope=openid offline_access profile email veteran_status.read
+  </code>
+</pre>
+<div className="va-api-code-tip">
+  (⚠️Be sure to replace <code>&lt;yourRedirectURL&gt;</code> with the redirect URL that you provided during registration)
+</div>
 
 The user will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
 
@@ -51,32 +56,40 @@ This flow works for applications that aren't able to keep a *client secret* prot
 
 Your application will need to redirect the user's browser to our OpenID authorization server with a request like this:
 
-```http
-HTTP/1.1 302 Found
-Location: https://dev-api.va.gov/oauth2/authorize?
-  client_id=s6BhdRkqt3
-  &response_type=id_token
-  &response_mode=fragment
-  &redirect_uri=<yourRedirectURL>
-  &scope=openid%20profile%20email
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
+<pre className="va-api-code-block-with-tip">
+  <code>
+    HTTP/1.1 302 Found<br />
+    Location: https://dev-api.va.gov/oauth2/authorize?<br />
+      &nbsp;&nbsp;client_id=s6BhdRkqt3<br />
+      &nbsp;&nbsp;&amp;response_type=id_token<br />
+      &nbsp;&nbsp;&amp;response_mode=fragment<br />
+      &nbsp;&nbsp;&amp;redirect_uri=&lt;yourRedirectURL&gt;<br />
+      &nbsp;&nbsp;&amp;scope=openid%20profile%20email<br />
+  </code>
+</pre>
+<div className="va-api-code-tip">
+  (⚠️Be sure to replace <code>&lt;yourRedirectURL&gt;</code> with the redirect URL that you provided during registration)
+</div>
 
 In the request above the `response_mode` value determines how the token is provided when the user's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
 
 After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
-```http
-GET <yourRedirectURL>#
-  id_token=SlAV32hkKG
-  &access_token=SlAV32hkKG
-  &token_type=Bearer
-  &expires_in=3600
-  &scope=openid%20profile%20email
-  &state=af0ifjsldkj
-Host: <yourRedirectHost>
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration, and `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration)
+<pre className="va-api-code-block-with-tip">
+  <code>
+    GET &lt;yourRedirectURL&gt;#<br />
+      &nbsp;&nbsp;id_token=SlAV32hkKG<br />
+      &nbsp;&nbsp;&amp;access_token=SlAV32hkKG<br />
+      &nbsp;&nbsp;&amp;token_type=Bearer<br />
+      &nbsp;&nbsp;&amp;expires_in=3600<br />
+      &nbsp;&nbsp;&amp;scope=openid%20profile%20email<br />
+      &nbsp;&nbsp;&amp;state=af0ifjsldkj<br />
+    Host: &lt;yourRedirectHost&gt;
+  </code>
+</pre>
+<div className="va-api-code-tip">
+  (⚠️Be sure to replace <code>&lt;yourRedirectURL&gt;</code> with the redirect URL that you provided during registration, and `&lt;yourRedirectHost&gt;` with the host part of the redirect URL that you provided during registration)
+</div>
 
 If you requested an `id_token` it will be returned as a parameter called `id_token`. If you requested a `token`, it will be returned as a parameter called `access_token`.
 
@@ -88,38 +101,50 @@ This flow is used by applications that are able to safely store a *client secret
 
 Your application will need to redirect the user's browser to our OpenID authorization server with a request like this:
 
-```http
-HTTP/1.1 302 Found
-Location: https://dev-api.va.gov/oauth2/authorize?
-  response_type=code
-  &scope=openid%20profile%20email%20offline_access
-  &client_id=s6BhdRkqt3
-  &state=af0ifjsldkj
-  &redirect_uri=<yourRedirectURL>
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
+<pre className="va-api-code-block-with-tip">
+  <code>
+    HTTP/1.1 302 Found<br />
+    Location: https://dev-api.va.gov/oauth2/authorize?<br />
+      &nbsp;&nbsp;response_type=code<br />
+      &nbsp;&nbsp;&amp;scope=openid%20profile%20email%20offline_access<br />
+      &nbsp;&nbsp;&amp;client_id=s6BhdRkqt3<br />
+      &nbsp;&nbsp;&amp;state=af0ifjsldkj<br />
+      &nbsp;&nbsp;&amp;redirect_uri=&lt;yourRedirectURL&gt;
+  </code>
+</pre>
+<div className="va-api-code-tip">
+  (⚠️Be sure to replace <code>&lt;yourRedirectURL&gt;</code> with the redirect URL that you provided during registration)
+</div>
 
 After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
-```http
-GET <yourRedirectURL>#
-  code=z92dapo5
-  &state=af0ifjsldkj
-Host: <yourRedirectHost>
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration, and `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration)
+<pre className="va-api-code-block-with-tip">
+  <code>
+    GET &lt;yourRedirectURL&gt;#<br/>
+      &nbsp;&nbsp;code=z92dapo5<br />
+      &nbsp;&nbsp;&amp;state=af0ifjsldkj<br />
+    Host: &lt;yourRedirectHost&gt;
+  </code>
+</pre>
+<div className="va-api-code-tip">
+  (⚠️Be sure to replace <code>&lt;yourRedirectURL&gt;</code> with the redirect URL that you provided during registration, and `&lt;yourRedirectHost&gt;` with the host part of the redirect URL that you provided during registration)
+</div>
 
 Your application then makes a request to our authorization service using the returned `code` and `state` parameters. The request should use HTTP Basic authorization with your *client id* as the username and your *client secret* as the password. Your request should look like:
 
-```plaintext
-POST /oauth2/token HTTP/1.1
-Host: dev-api.va.gov
-Content-Type: application/x-www-form-urlencoded
-Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
-
-grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri=<yourRedirectURL>
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
+<pre className="va-api-code-block-with-tip">
+  <code>
+    POST /oauth2/token HTTP/1.1<br />
+    Host: dev-api.va.gov<br />
+    Content-Type: application/x-www-form-urlencoded<br />
+    Authorization: Basic &#123;base64 encoded *client id* + ':' + *client secret*&#125;<br />
+    <br />
+    grant_type=authorization_code&amp;code=z92dapo5&amp;state=af0ifjsldkj&amp;redirect_uri=&lt;yourRedirectURL&gt;<br />
+  </code>
+</pre>
+<div className="va-api-code-tip">
+  (⚠️Be sure to replace <code>&lt;yourRedirectURL&gt;</code> with the redirect URL that you provided during registration)
+</div>
 
 The authorization server will response with an access token. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response will look like this:
 
@@ -307,27 +332,30 @@ npm install --save express \
 
 Open up a file called `index.js` in your editor of choice and add the following:
 
-```
-const { Issuer } = require('openid-client');
-
-const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration';
-const client_id = 'your_client_id';
-const client_secret = 'your_client_secret';
-
-const createClient = async () => {
-  Issuer.defaultHttpOptions = { timeout: 2500 };
-  return Issuer.discover(ROOT_URL).then(issuer => {
-    return new issuer.Client({
-      client_id,
-      client_secret,
-      redirect_uris: [
-        '<yourRedirectURL>'
-      ],
-    });
-  });
-}
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
+<pre className="va-api-code-block-with-tip">
+  <code>
+    const &#123; Issuer &#123; = require('openid-client')&semi;<br />
+    const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration'&semi;<br />
+    const client_id = 'your_client_id'&semi;<br />
+    const client_secret = 'your_client_secret'&semi;<br />
+    <br />
+    const createClient = async () => &#123;<br />
+      &nbsp;&nbsp;Issuer.defaultHttpOptions = &#123; timeout: 2500 &#123;&semi;<br />
+      &nbsp;&nbsp;return Issuer.discover(ROOT_URL).then(issuer => &#123;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;return new issuer.Client(&#123;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client_id,<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client_secret,< br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redirect_uris: [<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'&lt;yourRedirectURL&gt;'<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&#125;)&semi;<br />
+      &nbsp;&nbsp;&#125;)&semi;<br />
+    &#125;
+  </code>
+</pre>
+<div className="va-api-code-tip">
+  (⚠️Be sure to replace <code>&lt;yourRedirectURL&gt;</code> with the redirect URL that you provided during registration)
+</div>
 
 Congratulations you should be able to run `node index.js` in your terminal and have it exit with no errors. All of the configuration required for OpenID Connect can be handled by the client reading metadata supplied by the VA OAuth authorization server. 
 
@@ -412,13 +440,13 @@ This anonymous function asynchronously retrieves the client information then sta
 Now, we'll add routes to handle the OpenID authorization. Again in `index.js` in our `startApp` function:
 
 ```
-  app.get('/', (req, res) => res.send('Hello World!')); // already exists
-  
-  app.get('/auth', passport.authenticate('oidc'));
-  app.get(
-    '/auth/cb',
-    passport.authenticate('oidc', { successRedirect: '/', failureRedirect: '/'})
-  );
+app.get('/', (req, res) => res.send('Hello World!')); // already exists
+
+app.get('/auth', passport.authenticate('oidc'));
+app.get(
+  '/auth/cb',
+  passport.authenticate('oidc', { successRedirect: '/', failureRedirect: '/'})
+);
 ```
 
 And that's all you'll need to do to add VA OAuth to a node application. After starting the app up again with `node index.js` navigate to `<yourRedirectHost>/auth` in your browser (⚠️Be sure to replace `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration). Your browser should then take you through the login flow and return you to a page displaying 'Hello World!'. 
@@ -470,8 +498,8 @@ const verifyVeteranStatus = async (req, res, next) => {
 Finally let's add a new route to the application in `startApp`:
 
 ```
-  app.get('/', (req, res) => res.send('Hello World!')); // already exists
-  app.get('/status', verifyVeteranStatus);
+app.get('/', (req, res) => res.send('Hello World!')); // already exists
+app.get('/status', verifyVeteranStatus);
 ```
 
 Now, after restarting `node index.js` you can first navigate to `<yourRedirectHost>/auth` in your browser (⚠️Be sure to replace `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration) to login, then navigate to `<yourRedirectHost>/status` to see your Veteran Status. 

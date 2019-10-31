@@ -8,6 +8,7 @@
 
   code {
     background-color: #222935;
+    border-radius: 3px;
     color: $color-white;
     font-family: 'Source Code Pro', monospace;
     padding: 0.2rem 0.4rem;
@@ -34,5 +35,20 @@
 
   td ul {
     border: none;
+  }
+
+  pre.va-api-code-block-with-tip {
+    margin-bottom: 0;
+    
+    > code {
+      border-radius: 3px 3px 0 0;
+    }
+  }
+
+  .va-api-code-tip {
+    background-color: $color-white;
+    border: 1px solid #3d3d3d;
+    border-radius: 0 0 3px 3px;
+    padding: 1.2rem;
   }
 }
