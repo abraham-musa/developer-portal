@@ -33,7 +33,7 @@ export default class SupportContactUs extends React.Component<{}, ISupportContac
 
   public render() {
     const headerProps = {
-      description: "You can submit an issue on GitHub (requires an account) or contact us by using the form below. Please provide as much detail as possible. Your concerns and feedback are important to us, and you can expect a reply within one business day.",
+      description: "Greeting, developers! You can submit an issue on GitHub (requires an account) or contact us by using the form below. Please provide as much detail as possible. Your concerns and feedback are important to us, and you can expect a reply within one business day.",
       halo: "Support",
       header: "Contact Us",
     };
