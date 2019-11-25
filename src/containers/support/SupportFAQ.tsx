@@ -12,6 +12,9 @@ const generalQuestions: ISupportQuestion[] = [
         the <a href="http://www.va.gov">US Department of Veterans Affairs website</a> to access and
         manage your VA benefits and health care. There are also helpful reference links and Q&amp;A at
         the VA Inquiry Routing &amp; Information System <a href="https://iris.custhelp.va.gov/app/answers/list">(IRIS)</a>.
+      <p>
+        If you are a Veteran trying to access VA records in the iPhone Health app, please visit 
+        <a href="https://support.apple.com/en-us/HT208680">View health records on your iPhone</a>.
       </p>
     ),
     question: 'Is this where I apply for VA Benefits and access to my health records?',
