@@ -5,9 +5,6 @@ import OperationTag from './OperationTag';
 import Servers from './Servers';
 import ServersContainer from './ServersContainer';
 import './StyleOverride.scss';
-import { VersionActions } from './VersionActions';
-import { VersionReducers } from './VersionReducers';
-import { VersionSelector } from './VersionSelector';
 import { WrapParameters } from './WrapParameters';
 
 export function SwaggerPlugins(versionHandler: any) {
@@ -20,15 +17,11 @@ export function SwaggerPlugins(versionHandler: any) {
     },
     fn: {
       curlify,
+      versionHandler,
     },
     statePlugins: {
       spec: {
         ...DisableTryItOut.toggleTryItOut(),
-      },
-      version: {
-        ...VersionActions(versionHandler),
-        ...VersionReducers,
-        ...VersionSelector,
       },
     },
     wrapComponents: {

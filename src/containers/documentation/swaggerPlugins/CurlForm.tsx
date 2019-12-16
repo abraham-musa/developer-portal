@@ -1,15 +1,20 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { connect } from 'react-redux';
 
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { getVersionNumber } from '../../../reducers/api-versioning';
+import { IRootState } from '../../../types';
 
 import './CurlForm.scss';
 
 export interface ICurlFormProps {
   system: any;
   operation: any;
+  versionNumber: string; 
 }
 
 export interface ICurlFormState {
@@ -19,7 +24,13 @@ export interface ICurlFormState {
   params: object[];
 }
 
-export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
+const mapStateToProps = (state : IRootState) => {
+  return {
+    versionNumber: getVersionNumber(state.apiVersioning),
+  };
+};
+
+class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public constructor(props: ICurlFormProps) {
     super(props);
 
@@ -273,3 +284,5 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     }
   }
 }
+
+export default connect(mapStateToProps)(CurlForm);

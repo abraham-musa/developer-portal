@@ -5,32 +5,22 @@ import { IVersionInfo } from '../SwaggerDocs';
 
 export interface IVersionSelectProps {
   getSystem: any;
+  metadata: any;
+  versionNumber: string;
 }
 
-export interface IVersionSelectState {
-  version: string;
-}
-
-export default class VersionSelect extends React.Component<IVersionSelectProps, IVersionSelectState> {
+export default class VersionSelect extends React.Component<IVersionSelectProps> {
   public constructor(props: IVersionSelectProps) {
     super(props);
-    const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
-    const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
-    this.state = { version: initialVersion };
-  }
-
-  public getCurrentVersion() {
-    const metadata = this.props.getSystem().versionSelectors.apiMetadata();
-    const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
-    return metadata.meta.versions.find(selectCurrentVersion).version;
   }
 
   public handleSelectChange(version: string) {
-    this.setState({ version });
+    // this.setState({ version });
   }
 
   public handleButtonClick() {
-    this.props.getSystem().versionActions.updateVersion(this.state.version);
+    this.props.getSystem().fn.versionHandler();
+    // this.props.getSystem().versionActions.updateVersion(this.state.version);
   }
 
   public buildDisplay(metaObject: IVersionInfo) {
@@ -47,7 +37,7 @@ export default class VersionSelect extends React.Component<IVersionSelectProps, 
       )}>
         <select // tslint:disable-next-line:react-a11y-no-onchange
           aria-label="Version Selection"
-          value={this.state.version}
+          value={this.props.versionNumber}
           onChange={e => this.handleSelectChange(e.target.value)}
           className={classNames(
             'vads-u-display--inline-block',
@@ -55,9 +45,7 @@ export default class VersionSelect extends React.Component<IVersionSelectProps, 
             'vads-u-margin-right--4',
             'va-api-u-min-width--200')}
         >
-          {this.props
-            .getSystem()
-            .versionSelectors.apiMetadata()
+          {this.props.metadata
             .meta.versions.map((versionInfo: IVersionInfo) => {
               return (
                 <option value={versionInfo.version} key={versionInfo.version}>
