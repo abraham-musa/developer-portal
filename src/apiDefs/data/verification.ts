@@ -6,6 +6,7 @@ const verificationApis: IApiDescription[] = [
     description: 'Provides methods to standardize and validate addresses.',
     docSources: [
       {
+        metadataUrl: `${swaggerHost}/services/veteran_verification/address_validation_metadata`,
         openApiUrl: `${swaggerHost}/services/address_validation/docs/v1/api`,
       },
     ],
